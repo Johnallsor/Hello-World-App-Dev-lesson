@@ -2,6 +2,9 @@
 int appWidth, appHeight;
 float centerWidth, centerHeight, xStart, yStart, widthRect, heightRect;
 color black=#000000, white=#FFFFFF, green=#00FC45,yellow=#FCFC00;
+color yellowNightMode=#FCFC00, greenNightMode;
+float thick, thin;
+boolean grayScale=false, randomColour=false, blackBackground=false, nightMode=false;
 //
 void setup() {
   //Declare Display Geometry: square, landscape, portrait
@@ -37,7 +40,7 @@ void setup() {
  widthRect = height * 1/2;
  heightRect = height * 1/2;
  //
- //Population
+ //Population 
  centerWidth = appWidth * 1/2;
  centerHeight = appHeight * 1/2;
  xStart = centerWidth - ( appWidth * 1/4);
@@ -45,27 +48,49 @@ void setup() {
  widthRect = appWidth * 1/2;
  heightRect = appHeight * 1/2;
  thick = appWidth * 1/70;
- thin = appWidth * 1/140
- } //End setup
+ thin = appWidth * 1/140;
+} //End setup
 //
 void draw() {
-  background(255); //Gray Scale 0-255
+ if (grayScale == true)  background(255); //Gray Scale 0-255
   //random(a,b)
- background( color( random(0, 255)), random(255), random(255)); // Grey Scale, 
- //nightmode
- background (black);
+ if (randomColour == true) background( color( random(0, 255)), random(255), random(255)); // Grey Scale, 
+ //Night Mode
+if (blackBackground == true) background (black);
  //
+ if (nightMode == true)  
+ {
+ stroke(yellowNightMode);
+ fill(greenNightMode);
+ } else 
+ {
+  stroke(yellow); 
+  fill(green);
+ }
+ rect(xStart, yStart, widthRect, heightRect);
  strokeWeight(thick); //noStroke()
- stroke(yellow);
- fill(green);
+ stroke(yellow);//yellow Night Mode
+ fill(green); // green Night Mode
  rect(xStart, yStart, widthRect, heightRect);
  fill(white); //Reset default
  stroke(black);//Reset default
  strokeWeight(1);//Reset default
 } //End draw
 //
-void keyPressed() {} //End keyPressed
+void keyPressed() {
+  grayScale = false;
+  randomColour = false;
+ if (key=='A' || key=='a') grayScale = true;
+ if (key=='S' || key=='s' ) randomColour = true;
+  if (key=='W' ||  key=='s') blackBackground = true;
+ if (key=='W'  || key=='w') blackBackground = true;
+} //End keyPressed
 //
-void mousePressed() {} //End mousePressed
+void mousePressed() {
+if ( mouseButton == LEFT) nightMode = true;
+if ( mouseButton == RIGHT) nightMode = false;
+
+
+} //End mousePressed
 //
 // End Main Program
